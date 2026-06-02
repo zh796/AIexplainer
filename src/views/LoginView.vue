@@ -33,13 +33,21 @@ async function handleLogin(): Promise<void> {
 async function handleGitHub(): Promise<void> {
   loading.value = true
   errorMsg.value = ''
-  await auth.signInWithGitHub()
+  const { success, error } = await auth.signInWithGitHub()
+  loading.value = false
+  if (!success && error) {
+    errorMsg.value = error
+  }
 }
 
 async function handleGoogle(): Promise<void> {
   loading.value = true
   errorMsg.value = ''
-  await auth.signInWithGoogle()
+  const { success, error } = await auth.signInWithGoogle()
+  loading.value = false
+  if (!success && error) {
+    errorMsg.value = error
+  }
 }
 </script>
 
