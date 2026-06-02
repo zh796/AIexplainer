@@ -56,9 +56,10 @@ async function signIn(email: string, password: string): Promise<{ success: boole
 
 async function signInWithGitHub(): Promise<{ success: boolean; error?: string }> {
   state.error = null
+  const redirectTo = `${window.location.origin}${import.meta.env.BASE_URL}auth/callback`
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
-    options: { redirectTo: window.location.origin },
+    options: { redirectTo },
   })
   if (error) {
     state.error = error.message
@@ -69,9 +70,10 @@ async function signInWithGitHub(): Promise<{ success: boolean; error?: string }>
 
 async function signInWithGoogle(): Promise<{ success: boolean; error?: string }> {
   state.error = null
+  const redirectTo = `${window.location.origin}${import.meta.env.BASE_URL}auth/callback`
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.origin },
+    options: { redirectTo },
   })
   if (error) {
     state.error = error.message
