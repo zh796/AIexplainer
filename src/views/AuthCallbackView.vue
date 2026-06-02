@@ -10,32 +10,50 @@ const status = ref<'loading' | 'error' | 'success'>('loading')
 const errorMsg = ref('')
 
 onMounted(async () => {
-  // 优先使用当前 URL 中的 auth code 参数
-  let targetUrl = window.location.href
+  // 从当前 URL 或 sessionStorage 中提取 auth code
+  let authCode: string | null = null
 
-  // 如果当前 URL 不含 code，尝试从 sessionStorage 恢复
-  if (!route.query.code && !new URL(targetUrl).searchParams.has('code')) {
+  // 优先从当前路由 query 或 URL 中获取 code
+  const currentCode = route.query.code as string
+  if (currentCode) {
+    authCode = Array.isArray(currentCode) ? currentCode[0] : currentCode
+  } else {
+    // 尝试从当前 location.href 解析
+    const params = new URL(window.location.href).searchParams
+    authCode = params.get('code')
+  }
+
+  // 如果当前 URL 没有 code，尝试从 sessionStorage 恢复
+  if (!authCode) {
     const saved = sessionStorage.getItem('redirect')
     if (saved) {
-      const savedUrl = new URL(saved)
-      if (savedUrl.searchParams.has('code')) {
-        targetUrl = saved
-        sessionStorage.removeItem('redirect')
-        // 用完整 URL 替换当前路由，让 code 出现在地址栏
-        await router.replace(savedUrl.pathname + savedUrl.search + savedUrl.hash)
-        targetUrl = window.location.href
-      }
+      sessionStorage.removeItem('redirect')
+      try {
+        const savedUrl = new URL(saved)
+        authCode = savedUrl.searchParams.get('code')
+        if (authCode) {
+          // 恢复 URL 到地址栏，确保后续 state 一致
+          await router.replace(savedUrl.pathname + savedUrl.search + savedUrl.hash)
+        }
+      } catch { /* URL 解析失败，忽略 */ }
     }
   }
 
-  const { error } = await supabase.auth.exchangeCodeForSession(targetUrl)
+  if (!authCode) {
+    status.value = 'error'
+    errorMsg.value = '未在回调 URL 中找到授权码 (code)'
+    setTimeout(() => router.replace('/login'), 4000)
+    return
+  }
+
+  // 仅传递 code 值（而非完整 URL），这是 Supabase API 的要求
+  const { error } = await supabase.auth.exchangeCodeForSession(authCode)
 
   if (error) {
     status.value = 'error'
     errorMsg.value = error.message
     console.error('[Auth Callback] exchangeCodeForSession 失败:', error)
-    // 3 秒后跳转到登录页
-    setTimeout(() => router.replace('/login'), 3000)
+    setTimeout(() => router.replace('/login'), 4000)
   } else {
     status.value = 'success'
     router.replace('/')
