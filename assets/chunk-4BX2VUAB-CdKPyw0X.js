@@ -1,0 +1,1 @@
+import{jn as e}from"./_plugin-vue_export-helper-BFx8cnfE.js";function t(e,t){e.accDescr&&t.setAccDescription?.(e.accDescr),e.accTitle&&t.setAccTitle?.(e.accTitle),e.title&&t.setDiagramTitle?.(e.title)}e(t,`populateCommonDb`);export{t};
