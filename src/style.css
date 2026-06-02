@@ -1,0 +1,7 @@
+/* AI Explainer — 样式入口
+   模块拆分: tokens / base / components / animations */
+
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+@import "./styles/components.css";
+@import "./styles/animations.css";
