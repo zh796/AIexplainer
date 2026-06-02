@@ -9,10 +9,10 @@ export default defineConfig({
     tailwindcss(),
   ],
 
-  // ====== GitHub Pages 部署配置 ======
-  // 用户/组织站点 (username.github.io): base 设为 '/'
-  // 项目站点 (username.github.io/repo-name): base 设为 '/repo-name/'
-  base: '/AIexplainer/',
+  // ====== 动态部署配置 ======
+  // 本地开发: base = '/'
+  // GitHub Pages: base = '/AIexplainer/' (通过环境变量设置)
+  base: process.env.VITE_BASE_PATH || '/',
 
   build: {
     // 输出目录（GitHub Pages 默认用 docs/ 或根目录）
