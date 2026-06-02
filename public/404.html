@@ -6,10 +6,17 @@
   <title>AI Explainer</title>
   <script>
     // GitHub Pages SPA 路由回退
-    // 将 404 页面重定向到 index.html，保留路径信息
-    sessionStorage.redirect = location.href
+    // 将当前 URL 保存到 sessionStorage，SPA 加载后恢复导航
+    sessionStorage.redirect = location.href;
+
+    // 动态计算 base path（支持根路径和子路径部署）
+    // 例如 /AIexplainer/login -> /AIexplainer/
+    //      /login -> /
+    var path = location.pathname;
+    var secondSlash = path.indexOf('/', 1);
+    var base = secondSlash > 0 ? path.substring(0, secondSlash + 1) : '/';
+    location.replace(base);
   </script>
-  <meta http-equiv="refresh" content="0;URL='/'">
 </head>
 <body>
   <p>正在跳转...</p>
