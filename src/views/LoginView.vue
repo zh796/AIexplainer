@@ -33,20 +33,31 @@ async function handleLogin(): Promise<void> {
 async function handleGitHub(): Promise<void> {
   loading.value = true
   errorMsg.value = ''
-  const { success, error } = await auth.signInWithGitHub()
-  loading.value = false
-  if (!success && error) {
-    errorMsg.value = error
+  try {
+    const { success, error } = await auth.signInWithGitHub()
+    if (!success && error) {
+      errorMsg.value = error
+      loading.value = false
+    }
+    // 成功后浏览器会跳转到 GitHub，无需操作 loading
+  } catch (e: any) {
+    errorMsg.value = e?.message || 'GitHub 登录异常，请重试'
+    loading.value = false
   }
 }
 
 async function handleGoogle(): Promise<void> {
   loading.value = true
   errorMsg.value = ''
-  const { success, error } = await auth.signInWithGoogle()
-  loading.value = false
-  if (!success && error) {
-    errorMsg.value = error
+  try {
+    const { success, error } = await auth.signInWithGoogle()
+    if (!success && error) {
+      errorMsg.value = error
+      loading.value = false
+    }
+  } catch (e: any) {
+    errorMsg.value = e?.message || 'Google 登录异常，请重试'
+    loading.value = false
   }
 }
 </script>
