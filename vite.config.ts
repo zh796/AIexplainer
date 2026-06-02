@@ -12,7 +12,7 @@ export default defineConfig({
   // ====== GitHub Pages 部署配置 ======
   // 用户/组织站点 (username.github.io): base 设为 '/'
   // 项目站点 (username.github.io/repo-name): base 设为 '/repo-name/'
-  base: '/',
+  base: '/AIexplainer/',
 
   build: {
     // 输出目录（GitHub Pages 默认用 docs/ 或根目录）
