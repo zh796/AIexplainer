@@ -1,0 +1,2 @@
+import{t as e}from"./mermaid-parser.core-BeBF6shF.js";import{$t as t,Mn as n,gt as r,jn as i}from"./_plugin-vue_export-helper-laHFabIC.js";var a={parse:i(async t=>{let r=await e(`info`,t);n.debug(r)},`parse`)},o={version:`11.15.0`},s={parser:a,db:{getVersion:i(()=>o.version,`getVersion`)},renderer:{draw:i((e,i,a)=>{n.debug(`rendering info diagram
+`+e);let o=r(i);t(o,100,400,!0),o.append(`g`).append(`text`).attr(`x`,100).attr(`y`,40).attr(`class`,`version`).attr(`font-size`,32).style(`text-anchor`,`middle`).text(`v${a}`)},`draw`)}};export{s as diagram};
