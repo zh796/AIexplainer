@@ -338,7 +338,7 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
         <!-- SVG 图表区域 -->
         <div
           ref="svgWrapper"
-          class="w-full overflow-x-auto overflow-y-hidden flex justify-center items-start
+          class="w-full overflow-hidden flex justify-center items-start
                  cursor-grab active:cursor-grabbing select-none
                  transition-[background] duration-200"
           :class="{
@@ -354,7 +354,7 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
           @mouseleave="onPanEnd"
         >
           <div
-            class="[&_svg]:h-auto origin-top-left min-w-fit"
+            class="[&_svg]:max-w-full [&_svg]:h-auto origin-top-left"
             :style="{ transform: transformStyle, transition: isPanning ? 'none' : 'transform 0.3s ease' }"
             v-html="svgContent"
           />
