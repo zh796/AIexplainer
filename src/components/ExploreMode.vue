@@ -259,7 +259,7 @@ function onStartLearning(concept: string) {
       </div>
     </nav>
 
-    <main class="w-full max-w-2xl mx-auto px-4 sm:px-6 pt-8 pb-16 sm:pt-12 sm:pb-20 flex flex-col items-center">
+    <main class="w-full max-w-2xl mx-auto px-6 sm:px-10 pt-8 pb-16 sm:pt-12 sm:pb-20">
 
       <!-- ================================================================ -->
       <!-- 第一章：什么是人工智能 -->
@@ -273,14 +273,14 @@ function onStartLearning(concept: string) {
 
         <!-- 1.1 核心定义 -->
         <div :id="chapters[0].subs[0].id" class="mb-20 scroll-mt-32 w-full">
-          <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
+          <div class="reveal flex items-center justify-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">1</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">人工智能的核心定义</h3>
           </div>
           <div class="space-y-4">
-            <p class="reveal text-fg-muted leading-relaxed text-sm sm:text-base" style="opacity:0;transform:translateY(15px)">人工智能（Artificial Intelligence，简称 AI）是计算机科学的一个分支，致力于创造能够<strong class="text-primary">模拟人类智能</strong>的系统。这些系统能够感知环境、理解语言、学习知识、进行推理，并据此做出决策。</p>
-            <p class="reveal text-fg-muted leading-relaxed text-sm sm:text-base" style="opacity:0;transform:translateY(15px)">用一句话概括：<span class="text-accent font-semibold">AI = 让机器做人需要智力才能做的事情。</span>这里的智能涵盖多个维度——逻辑推理、知识表示、规划、自然语言理解、感知以及物体操控等。</p>
-            <p class="reveal text-fg-muted leading-relaxed text-sm sm:text-base" style="opacity:0;transform:translateY(15px)">现代 AI 的核心驱动力量是<span class="text-warning font-semibold">数据 + 算法 + 算力</span>。海量数据提供学习素材，精巧算法定义学习方式，强大算力支撑计算规模——三者缺一不可。</p>
+            <p class="reveal text-fg-muted leading-relaxed text-sm sm:text-base text-center" style="opacity:0;transform:translateY(15px)">人工智能（Artificial Intelligence，简称 AI）是计算机科学的一个分支，致力于创造能够<strong class="text-primary">模拟人类智能</strong>的系统。这些系统能够感知环境、理解语言、学习知识、进行推理，并据此做出决策。</p>
+            <p class="reveal text-fg-muted leading-relaxed text-sm sm:text-base text-center" style="opacity:0;transform:translateY(15px)">用一句话概括：<span class="text-accent font-semibold">AI = 让机器做人需要智力才能做的事情。</span>这里的智能涵盖多个维度——逻辑推理、知识表示、规划、自然语言理解、感知以及物体操控等。</p>
+            <p class="reveal text-fg-muted leading-relaxed text-sm sm:text-base text-center" style="opacity:0;transform:translateY(15px)">现代 AI 的核心驱动力量是<span class="text-warning font-semibold">数据 + 算法 + 算力</span>。海量数据提供学习素材，精巧算法定义学习方式，强大算力支撑计算规模——三者缺一不可。</p>
           </div>
           <div class="reveal flex items-center justify-center mt-6" style="opacity:0;transform:translateY(20px)">
             <svg viewBox="0 0 320 260" class="w-full max-w-[300px] h-auto">
@@ -312,7 +312,7 @@ function onStartLearning(concept: string) {
 
         <!-- 1.2 发展简史 -->
         <div :id="chapters[0].subs[1].id" class="mb-20 scroll-mt-32 w-full">
-          <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
+          <div class="reveal flex items-center justify-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">2</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">人工智能发展简史</h3>
           </div>
@@ -329,11 +329,11 @@ function onStartLearning(concept: string) {
 
         <!-- 1.3 三种层级 -->
         <div :id="chapters[0].subs[2].id" class="mb-20 scroll-mt-32 w-full">
-          <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
+          <div class="reveal flex items-center justify-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">3</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">AI 的三种层级</h3>
           </div>
-          <div class="grid sm:grid-cols-3 gap-4">
+          <div class="grid sm:grid-cols-3 gap-4 justify-items-center">
             <div class="reveal rounded-xl p-5 bg-bg-card border border-border hover:border-primary/50 transition-colors" style="opacity:0;transform:translateY(25px)">
               <div class="text-2xl mb-2">🎯</div><h4 class="text-sm font-bold text-primary mb-2">弱人工智能 (ANI)</h4>
               <p class="text-xs text-fg-muted leading-relaxed mb-2">Artificial Narrow Intelligence</p>
@@ -362,7 +362,7 @@ function onStartLearning(concept: string) {
 
         <!-- 1.4 AI vs 人类智能 -->
         <div :id="chapters[0].subs[3].id" class="mb-20 scroll-mt-32 w-full">
-          <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
+          <div class="reveal flex items-center justify-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">4</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">AI 智能 vs 人类智能</h3>
           </div>
@@ -385,11 +385,11 @@ function onStartLearning(concept: string) {
 
         <!-- 1.5 常见误解 -->
         <div :id="chapters[0].subs[4].id" class="scroll-mt-32 w-full">
-          <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
+          <div class="reveal flex items-center justify-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">5</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">关于 AI 的常见误解</h3>
           </div>
-          <div class="grid sm:grid-cols-2 gap-4">
+          <div class="grid sm:grid-cols-2 gap-4 justify-items-center">
             <div class="reveal rounded-xl p-4 bg-bg-card border border-border" style="opacity:0;transform:translateY(15px)"><div class="flex gap-3"><span class="text-error text-lg shrink-0">✕</span><div><p class="text-sm font-semibold text-fg">AI 会拥有自我意识</p><p class="text-xs text-fg-muted mt-1 leading-relaxed">目前的 AI 完全不具备意识。它们是基于统计的<strong class="text-primary">模式匹配系统</strong>，既不理解自己在做什么，也没有主观感受。</p></div></div></div>
             <div class="reveal rounded-xl p-4 bg-bg-card border border-border" style="opacity:0;transform:translateY(15px)"><div class="flex gap-3"><span class="text-error text-lg shrink-0">✕</span><div><p class="text-sm font-semibold text-fg">AI 将取代所有人类工作</p><p class="text-xs text-fg-muted mt-1 leading-relaxed">AI 擅长<strong class="text-accent">自动化重复性任务</strong>，但难以替代需要创造力、同理心和复杂决策的工作。更可能的是人机协作。</p></div></div></div>
             <div class="reveal rounded-xl p-4 bg-bg-card border border-border" style="opacity:0;transform:translateY(15px)"><div class="flex gap-3"><span class="text-error text-lg shrink-0">✕</span><div><p class="text-sm font-semibold text-fg">AI 总是客观公正的</p><p class="text-xs text-fg-muted mt-1 leading-relaxed">AI 模型会<strong class="text-warning">继承训练数据中的偏见</strong>。如果数据包含种族、性别等偏见，模型输出也会反映这些偏见。</p></div></div></div>
@@ -410,11 +410,11 @@ function onStartLearning(concept: string) {
 
         <!-- 2.1 -->
         <div :id="chapters[1].subs[0].id" class="mb-20 scroll-mt-32 w-full">
-          <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
+          <div class="reveal flex items-center justify-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-accent/15 text-accent flex items-center justify-center text-xs font-bold shrink-0">1</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">数据 → 训练 → 推理：AI 的三步流水线</h3>
           </div>
-          <div class="grid sm:grid-cols-3 gap-4 sm:gap-5">
+          <div class="grid sm:grid-cols-3 gap-4 sm:gap-5 justify-items-center">
             <div class="reveal rounded-xl p-5 bg-bg-card border border-border hover:border-primary/50 transition-colors" style="opacity:0;transform:translateY(30px)">
               <div class="text-3xl font-bold text-primary/15 mb-3" style="font-family:var(--font-display,inherit)">01</div>
               <h4 class="font-semibold text-primary mb-2 text-sm">数据收集与预处理</h4>
@@ -472,11 +472,11 @@ function onStartLearning(concept: string) {
 
         <!-- 2.2 神经网络的秘密 -->
         <div :id="chapters[1].subs[1].id" class="scroll-mt-32 w-full">
-          <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
+          <div class="reveal flex items-center justify-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-accent/15 text-accent flex items-center justify-center text-xs font-bold shrink-0">2</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">神经网络的秘密：层、权重与激活</h3>
           </div>
-          <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="grid md:grid-cols-2 gap-8 items-center justify-items-center">
             <div class="space-y-3">
               <div class="reveal rounded-lg p-4 bg-bg-card border border-border" style="opacity:0;transform:translateY(15px)"><h4 class="text-sm font-semibold text-primary mb-1">🔹 输入层</h4><p class="text-xs text-fg-muted leading-relaxed">接收原始数据。对于图像，每个像素是一个输入节点；对于文本，每个词或字符是一个输入。</p></div>
               <div class="reveal rounded-lg p-4 bg-bg-card border border-border" style="opacity:0;transform:translateY(15px)"><h4 class="text-sm font-semibold text-accent mb-1">🔹 隐藏层</h4><p class="text-xs text-fg-muted leading-relaxed">网络的核心——每一层学习越来越抽象的特征：第一层学边缘，第二层学形状，第三层学物体部件……层数越多，能学到的概念越复杂。</p></div>
@@ -544,7 +544,7 @@ function onStartLearning(concept: string) {
           <span class="text-xs tracking-[0.3em] text-accent font-semibold uppercase">第三章</span>
           <h2 class="text-3xl sm:text-4xl font-bold mt-2 text-fg" style="font-family:var(--font-display,inherit)">四大<span class="text-warning">核心概念</span></h2>
         </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 justify-items-center">
           <div :id="chapters[2].subs[0].id" class="scroll-mt-32"><div class="reveal group perspective-800 h-56" style="opacity:0;transform:translateY(30px)"><div class="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"><div class="absolute inset-0 rounded-xl bg-bg-card border border-border flex flex-col items-center justify-center p-4 text-center [backface-visibility:hidden]"><span class="text-3xl mb-2">🧠</span><h3 class="text-sm font-semibold text-primary">机器学习</h3><p class="text-xs text-fg-subtle mt-1">Machine Learning</p></div><div class="absolute inset-0 rounded-xl bg-bg-elevated border border-primary flex flex-col items-center justify-center p-4 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] shadow-md"><p class="text-xs text-fg-muted leading-relaxed">算法通过经验自动改进——从数据中学习规律，无需为每种情况显式编程。</p><p class="text-[10px] text-fg-subtle mt-2 italic">监督学习 · 无监督学习 · 强化学习</p></div></div></div></div>
           <div :id="chapters[2].subs[1].id" class="scroll-mt-32"><div class="reveal group perspective-800 h-56" style="opacity:0;transform:translateY(30px)"><div class="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"><div class="absolute inset-0 rounded-xl bg-bg-card border border-border flex flex-col items-center justify-center p-4 text-center [backface-visibility:hidden]"><span class="text-3xl mb-2">🔗</span><h3 class="text-sm font-semibold text-primary">深度学习</h3><p class="text-xs text-fg-subtle mt-1">Deep Learning</p></div><div class="absolute inset-0 rounded-xl bg-bg-elevated border border-primary flex flex-col items-center justify-center p-4 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] shadow-md"><p class="text-xs text-fg-muted leading-relaxed">多层神经网络逐层提取特征——从边缘到形状再到完整物体，层层抽象。</p><p class="text-[10px] text-fg-subtle mt-2 italic">CNN · RNN · Transformer</p></div></div></div></div>
           <div :id="chapters[2].subs[2].id" class="scroll-mt-32"><div class="reveal group perspective-800 h-56" style="opacity:0;transform:translateY(30px)"><div class="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"><div class="absolute inset-0 rounded-xl bg-bg-card border border-border flex flex-col items-center justify-center p-4 text-center [backface-visibility:hidden]"><span class="text-3xl mb-2">💬</span><h3 class="text-sm font-semibold text-primary">自然语言处理</h3><p class="text-xs text-fg-subtle mt-1">NLP</p></div><div class="absolute inset-0 rounded-xl bg-bg-elevated border border-primary flex flex-col items-center justify-center p-4 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] shadow-md"><p class="text-xs text-fg-muted leading-relaxed">让机器理解并生成人类语言——支撑着聊天机器人、翻译和文本分析。</p><p class="text-[10px] text-fg-subtle mt-2 italic">LLM · 情感分析 · 机器翻译</p></div></div></div></div>
