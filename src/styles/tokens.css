@@ -66,9 +66,9 @@
   --color-bg:              #F1F5F9;
   --color-bg-card:         #FFFFFF;
   --color-bg-elevated:     #E2E8F0;
-  --color-fg:              #000000;
-  --color-fg-muted:        #1a1a1a;
-  --color-fg-subtle:       #333333;
+  --color-fg:              #111111;
+  --color-fg-muted:        #333333;
+  --color-fg-subtle:       #555555;
   --color-primary:         #1D4ED8;
   --color-primary-hover:   #1E40AF;
   --color-primary-fg:      #FFFFFF;
