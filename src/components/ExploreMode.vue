@@ -228,7 +228,7 @@ function onStartLearning(concept: string) {
 }
 </script>
 <template>
-  <div ref="exploreRef" class="flex-1 overflow-y-auto relative z-10 flex flex-col items-center">
+  <div ref="exploreRef" class="flex-1 overflow-y-auto relative z-10">
 
     <!-- ====== 双层导航栏（分层设计） ====== -->
     <nav class="sticky top-0 z-20 bg-bg/95 backdrop-blur-lg border-b border-border shadow-sm w-full">
@@ -259,7 +259,7 @@ function onStartLearning(concept: string) {
       </div>
     </nav>
 
-    <main class="w-full max-w-3xl px-6 sm:px-10 pt-10 pb-20 sm:pt-14 sm:pb-24">">
+    <main class="w-full max-w-3xl mx-auto px-6 sm:px-10 pt-10 pb-20 sm:pt-14 sm:pb-24">">
 
       <!-- ================================================================ -->
       <!-- 第一章：什么是人工智能 -->
