@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 /**
  * ExploreMode v2 — 结构化 AI 教育浏览模式
  * 二级导航：章节 → 子章节，导航栏实时反映阅读位置
@@ -228,7 +228,7 @@ function onStartLearning(concept: string) {
 }
 </script>
 <template>
-  <div ref="exploreRef" class="flex-1 overflow-y-auto relative z-10">
+  <div ref="exploreRef" class="flex-1 relative z-10" style="width:100%;min-width:0;overflow-y:auto">
 
     <!-- ====== 双层导航栏（分层设计） ====== -->
     <nav class="sticky top-0 z-20 bg-bg/95 backdrop-blur-lg border-b border-border shadow-sm">
@@ -259,12 +259,12 @@ function onStartLearning(concept: string) {
       </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-4 sm:px-8 pt-8 pb-16 sm:pt-12 sm:pb-20">
+    <main class="pt-8 pb-16 sm:pt-12 sm:pb-20" style="width:100%;max-width:56rem;margin-left:auto;margin-right:auto;padding-left:1.25rem;padding-right:1.25rem">
 
       <!-- ================================================================ -->
       <!-- 第一章：什么是人工智能 -->
       <!-- ================================================================ -->
-      <section :id="chapters[0].id" class="pb-32">
+      <section :id="chapters[0].id" class="pb-32 centered-section">
         <div class="text-center mb-10 reveal chapter-header" style="opacity:0;transform:translateY(30px)">
           <span class="text-xs tracking-[0.3em] text-accent font-semibold uppercase">第一章</span>
           <h2 class="text-3xl sm:text-4xl font-bold mt-2 text-fg" style="font-family:var(--font-display,inherit)">什么是<span class="text-primary">人工智能</span>？</h2>
@@ -328,7 +328,7 @@ function onStartLearning(concept: string) {
         <div class="h-px bg-gradient-to-r from-transparent via-border to-transparent my-12 section-divider" />
 
         <!-- 1.3 三种层级 -->
-        <div :id="chapters[0].subs[2].id" class="mb-20 scroll-mt-32 max-w-3xl mx-auto">
+        <div :id="chapters[0].subs[2].id" class="mb-20 scroll-mt-32 centered-section">
           <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">3</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">AI 的三种层级</h3>
@@ -384,7 +384,7 @@ function onStartLearning(concept: string) {
         <div class="h-px bg-gradient-to-r from-transparent via-border to-transparent my-12 section-divider" />
 
         <!-- 1.5 常见误解 -->
-        <div :id="chapters[0].subs[4].id" class="scroll-mt-32 max-w-3xl mx-auto">
+        <div :id="chapters[0].subs[4].id" class="scroll-mt-32 centered-section">
           <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">5</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">关于 AI 的常见误解</h3>
@@ -402,14 +402,14 @@ function onStartLearning(concept: string) {
       <!-- ================================================================ -->
       <!-- 第二章：工作原理 -->
       <!-- ================================================================ -->
-      <section :id="chapters[1].id" class="pb-32 scroll-mt-32">
+      <section :id="chapters[1].id" class="pb-32 scroll-mt-32 centered-section">
         <div class="text-center mb-10 reveal chapter-header" style="opacity:0;transform:translateY(30px)">
           <span class="text-xs tracking-[0.3em] text-accent font-semibold uppercase">第二章</span>
           <h2 class="text-3xl sm:text-4xl font-bold mt-2 text-fg" style="font-family:var(--font-display,inherit)">AI 的<span class="text-accent">工作原理</span></h2>
         </div>
 
         <!-- 2.1 -->
-        <div :id="chapters[1].subs[0].id" class="mb-20 scroll-mt-32 max-w-3xl mx-auto">
+        <div :id="chapters[1].subs[0].id" class="mb-20 scroll-mt-32 centered-section">
           <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-accent/15 text-accent flex items-center justify-center text-xs font-bold shrink-0">1</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">数据 → 训练 → 推理：AI 的三步流水线</h3>
@@ -471,7 +471,7 @@ function onStartLearning(concept: string) {
         <div class="h-px bg-gradient-to-r from-transparent via-border to-transparent my-12 section-divider" />
 
         <!-- 2.2 神经网络的秘密 -->
-        <div :id="chapters[1].subs[1].id" class="scroll-mt-32 max-w-3xl mx-auto">
+        <div :id="chapters[1].subs[1].id" class="scroll-mt-32 centered-section">
           <div class="reveal flex items-center gap-3 mb-5" style="opacity:0;transform:translateY(20px)">
             <span class="w-7 h-7 rounded-full bg-accent/15 text-accent flex items-center justify-center text-xs font-bold shrink-0">2</span>
             <h3 class="text-lg sm:text-xl font-bold text-fg">神经网络的秘密：层、权重与激活</h3>
@@ -539,7 +539,7 @@ function onStartLearning(concept: string) {
       <!-- ================================================================ -->
       <!-- 第三章：核心概念 -->
       <!-- ================================================================ -->
-      <section :id="chapters[2].id" class="pb-32 scroll-mt-32 max-w-3xl mx-auto">
+      <section :id="chapters[2].id" class="pb-32 scroll-mt-32 centered-section">
         <div class="text-center mb-10 reveal chapter-header" style="opacity:0;transform:translateY(30px)">
           <span class="text-xs tracking-[0.3em] text-accent font-semibold uppercase">第三章</span>
           <h2 class="text-3xl sm:text-4xl font-bold mt-2 text-fg" style="font-family:var(--font-display,inherit)">四大<span class="text-warning">核心概念</span></h2>
@@ -577,7 +577,7 @@ function onStartLearning(concept: string) {
       <!-- ================================================================ -->
       <!-- 第四章：互动演示 -->
       <!-- ================================================================ -->
-      <section :id="chapters[3].id" class="pb-20 scroll-mt-32 max-w-3xl mx-auto">
+      <section :id="chapters[3].id" class="pb-20 scroll-mt-32 centered-section">
         <div class="text-center mb-8 reveal" style="opacity:0;transform:translateY(30px)">
           <span class="text-xs tracking-[0.3em] text-accent font-semibold uppercase">第四章</span>
           <h2 class="text-3xl sm:text-4xl font-bold mt-2 text-fg" style="font-family:var(--font-display,inherit)">互动<span class="text-primary">演示</span></h2>
