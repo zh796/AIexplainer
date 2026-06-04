@@ -129,6 +129,14 @@ function switchTheme(theme: Theme): void {
     <!-- 顶部操作栏 -->
     <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
       <button
+        @click="switchTheme(themes[(themes.findIndex(t => t.key === store.state.theme) + 1) % themes.length].key)"
+        class="btn-ghost text-xs py-1.5 px-3 cursor-pointer"
+        :aria-label="'切换主题（当前：' + themes.find(t => t.key === store.state.theme)?.label + '）'"
+        :title="'当前：' + themes.find(t => t.key === store.state.theme)?.label + '（点击切换）'"
+      >
+        {{ themes.find(t => t.key === store.state.theme)?.icon }}
+      </button>
+      <button
         @click="emit('open-saves')"
         class="btn-ghost text-xs py-1.5 px-3"
         aria-label="打开文件管理器"
@@ -191,24 +199,6 @@ function switchTheme(theme: Theme): void {
                 <span class="inline-block mt-2 text-xs text-primary">下方输入 →</span>
               </div>
             </div>
-          </button>
-        </div>
-
-        <!-- 主题切换 -->
-        <div class="flex items-center justify-center gap-2">
-          <span class="text-xs text-fg-subtle mr-1">主题</span>
-          <button
-            v-for="t in themes"
-            :key="t.key"
-            @click="switchTheme(t.key)"
-            :class="[
-              'px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer border',
-              store.state.theme === t.key
-                ? 'bg-primary/15 text-primary border-primary/30 shadow-sm'
-                : 'bg-bg-card text-fg-muted border-border hover:border-fg-subtle',
-            ]"
-          >
-            {{ t.icon }} {{ t.label }}
           </button>
         </div>
 
