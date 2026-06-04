@@ -37,13 +37,23 @@ function cacheKey(definition: string, theme: string): string {
   return String(hash)
 }
 
-/** 清理 Mermaid 输出的 SVG（移除脚本、外部资源等） */
+/** 清理 Mermaid 输出的 SVG（移除脚本、外部资源、危险元素等） */
 function sanitizeSvg(svg: string): string {
   return svg
+    // 移除 script 标签及其内容
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    // 移除所有 on* 事件处理器（双引号和单引号）
     .replace(/\bon\w+\s*=\s*"[^"]*"/gi, '')
     .replace(/\bon\w+\s*=\s*'[^']*'/gi, '')
+    // 移除外部资源引用（保留 data: URI）
     .replace(/xlink:href\s*=\s*"(?!data:)[^"]*"/gi, '')
+    .replace(/href\s*=\s*"(?:https?:|javascript:)[^"]*"/gi, '')
+    // 移除 foreignObject（可嵌入任意 HTML）
+    .replace(/<foreignObject\b[\s\S]*?<\/foreignObject>/gi, '')
+    // 移除危险的动画/设置元素中带 href 的标签
+    .replace(/<(?:animate|set)\b[^>]*href\s*=\s*"[^"]*"[^>]*\/?>/gi, '')
+    // 移除 <use> 引用外部资源
+    .replace(/<use\b[^>]*(?:href|xlink:href)\s*=\s*"(?!#)[^"]*"[^>]*\/?>/gi, '')
 }
 
 /** 配置 Mermaid 全局选项 */

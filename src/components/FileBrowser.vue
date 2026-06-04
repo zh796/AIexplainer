@@ -52,7 +52,7 @@ const newFolderName = ref('')
 
 // ====== 智能分类 ======
 async function handleAutoClassify(): Promise<void> {
-  const apiKey = localStorage.getItem('ai-explainer-api-key')
+  const apiKey = sessionStorage.getItem('ai-explainer-api-key')
   if (!apiKey) {
     toast.warning('请先配置 API Key')
     

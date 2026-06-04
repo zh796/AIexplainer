@@ -22,35 +22,41 @@ const props = defineProps<{
  * 策略: 先用占位符保护代码块，再处理其他 Markdown 标记，最后还原代码块。
  * 这防止了代码块中的 `**` / `*` / `#` 等被错误渲染。
  */
-function renderContent(text: string): string {
-  // 0. 安全转义（纯文本中的 HTML 特殊字符）
-  let html = text
+function escapeHtml(str: string): string {
+  return str
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
 
+function renderContent(text: string): string {
   // 1. 提取代码块 → 占位符保护
   const codeBlocks: string[] = []
-  html = html.replace(/`([^`]+)`/g, (_m, code: string) => {
-    codeBlocks.push(code)
+  let html = text.replace(/`([^`]+)`/g, (_m, code: string) => {
+    codeBlocks.push(escapeHtml(code))
     return `%%CODE_${codeBlocks.length - 1}%%`
   })
 
-  // 2. 标题
+  // 2. 转义剩余文本中的 HTML 特殊字符（在 Markdown 替换之前）
+  html = escapeHtml(html)
+
+  // 3. 标题（替换后的 $1 已经是安全的转义文本）
   html = html.replace(/^### (.+)$/gm, '<h4 class="text-base font-semibold mt-3 mb-1">$1</h4>')
   html = html.replace(/^## (.+)$/gm, '<h3 class="text-lg font-semibold mt-3 mb-1">$1</h3>')
   html = html.replace(/^# (.+)$/gm, '<h2 class="text-xl font-semibold mt-3 mb-1">$1</h2>')
 
-  // 3. 粗体
+  // 4. 粗体
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
 
-  // 4. 引用
-  html = html.replace(/^> (.+)$/gm, '<blockquote class="border-l-3 border-primary/40 pl-3 italic text-fg-muted my-2">$1</blockquote>')
+  // 5. 引用
+  html = html.replace(/^&gt; (.+)$/gm, '<blockquote class="border-l-3 border-primary/40 pl-3 italic text-fg-muted my-2">$1</blockquote>')
 
-  // 5. 列表项
+  // 6. 列表项
   html = html.replace(/^- (.+)$/gm, '<li class="ml-4 list-disc">$1</li>')
 
-  // 6. 还原代码块
+  // 7. 还原代码块（已经转义过）
   html = html.replace(/%%CODE_(\d+)%%/g, (_m, idx: string) => {
     const code = codeBlocks[parseInt(idx)]
     return `<code class="bg-bg-elevated px-1.5 py-0.5 rounded text-sm font-mono">${code}</code>`

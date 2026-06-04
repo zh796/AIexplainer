@@ -13,6 +13,14 @@ interface ClassifySuggestion {
   tutorialIds: number[]
 }
 
+/** 清洗 AI 返回的分组名，防止注入和超长内容 */
+function sanitizeGroupName(name: string): string {
+  return name
+    .replace(/[<>"'&]/g, '')
+    .trim()
+    .slice(0, 50)
+}
+
 /** 分类结果统计 */
 export interface ClassifyResult {
   groupsCreated: number
@@ -89,7 +97,7 @@ ${tutorialList}
       if (!sug.tutorialIds || sug.tutorialIds.length === 0) continue
 
       // 创建智能分类文件夹
-      const folderId = await createAutoFolder(sug.groupName)
+      const folderId = await createAutoFolder(sanitizeGroupName(sug.groupName))
 
       for (const tutorialId of sug.tutorialIds) {
         const tutorial = tutorials.find(t => t.id === tutorialId)

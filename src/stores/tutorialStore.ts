@@ -10,7 +10,7 @@ import { streamTutorial } from '../services/deepseekApi'
 
 /** 全局响应式状态 */
 const state = reactive({
-  apiKey: localStorage.getItem('ai-explainer-api-key') || null as string | null,
+  apiKey: sessionStorage.getItem('ai-explainer-api-key') || null as string | null,
   conceptInput: '',
   pages: [] as TutorialPage[],
   currentPageIndex: 0,
@@ -32,13 +32,13 @@ function setTheme(theme: Theme): void {
 /** 设置 API Key 并保存到 localStorage */
 function setApiKey(key: string): void {
   state.apiKey = key
-  localStorage.setItem('ai-explainer-api-key', key)
+  sessionStorage.setItem('ai-explainer-api-key', key)
 }
 
 /** 清除 API Key */
 function clearApiKey(): void {
   state.apiKey = null
-  localStorage.removeItem('ai-explainer-api-key')
+  sessionStorage.removeItem('ai-explainer-api-key')
 }
 
 /** 回到首页（退出当前学习，重新选择话题） */
