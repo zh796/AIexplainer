@@ -9,6 +9,7 @@ import { useTutorialStore } from '../stores/tutorialStore'
 import { useFluidCanvas } from '../composables/useFluidCanvas'
 import { useToast } from '../composables/useToast'
 import { staggerEnter } from '../composables/useGsap'
+import type { Theme } from '../types'
 
 const emit = defineEmits<{
   (e: 'open-saves'): void
@@ -103,6 +104,17 @@ function handleQuickConcept(concept: string): void {
 }
 
 const exampleConcepts = ['闭包是什么', '快速排序原理', '区块链入门', 'RESTful API']
+
+const themes: { key: Theme; label: string; icon: string }[] = [
+  { key: 'neon', label: '霓虹', icon: '💠' },
+  { key: 'light', label: '浅色', icon: '☀️' },
+  { key: 'dark', label: '深色', icon: '🌙' },
+  { key: 'sepia', label: '护眼', icon: '📜' },
+]
+
+function switchTheme(theme: Theme): void {
+  store.setTheme(theme)
+}
 </script>
 
 <template>
@@ -179,6 +191,24 @@ const exampleConcepts = ['闭包是什么', '快速排序原理', '区块链入�
                 <span class="inline-block mt-2 text-xs text-primary">下方输入 →</span>
               </div>
             </div>
+          </button>
+        </div>
+
+        <!-- 主题切换 -->
+        <div class="flex items-center justify-center gap-2">
+          <span class="text-xs text-fg-subtle mr-1">主题</span>
+          <button
+            v-for="t in themes"
+            :key="t.key"
+            @click="switchTheme(t.key)"
+            :class="[
+              'px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer border',
+              store.state.theme === t.key
+                ? 'bg-primary/15 text-primary border-primary/30 shadow-sm'
+                : 'bg-bg-card text-fg-muted border-border hover:border-fg-subtle',
+            ]"
+          >
+            {{ t.icon }} {{ t.label }}
           </button>
         </div>
 

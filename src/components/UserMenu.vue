@@ -2,11 +2,9 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
-import { useTutorialStore } from '../stores/tutorialStore'
 
 const router = useRouter()
 const auth = useAuthStore()
-const store = useTutorialStore()
 const open = ref(false)
 const menuRef = ref<HTMLElement | null>(null)
 
@@ -80,14 +78,6 @@ function goToApiKey() {
           class="w-full text-left px-4 py-2 text-sm text-fg-muted hover:bg-bg-elevated transition-colors cursor-pointer"
         >
           🔑 API Key 配置
-        </button>
-
-        <button
-          v-if="store.state.apiKey"
-          @click="store.clearApiKey(); goToApiKey()"
-          class="w-full text-left px-4 py-2 text-sm text-fg-muted hover:bg-bg-elevated transition-colors cursor-pointer"
-        >
-          🔄 更换 API Key
         </button>
 
         <div class="h-px bg-border my-1"></div>

@@ -1,17 +1,47 @@
 <script setup lang="ts">
 /**
- * API Key 输入 — 简洁卡片 + 清晰层次
+ * API Key 配置面板
+ * - 未设置时：输入框 + 保存
+ * - 已设置时：显示当前 Key（部分隐藏）+ 更换/清除
  */
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useTutorialStore } from '../stores/tutorialStore'
 
 const store = useTutorialStore()
 const inputKey = ref('')
 const showKey = ref(false)
+const isEditing = ref(false)
+
+const hasKey = computed(() => !!store.state.apiKey)
+const maskedKey = computed(() => {
+  const key = store.state.apiKey || ''
+  if (key.length <= 8) return '••••••••'
+  return key.slice(0, 4) + '••••••••••••' + key.slice(-4)
+})
 
 function saveKey(): void {
   const key = inputKey.value.trim()
-  if (key) store.setApiKey(key)
+  if (key) {
+    store.setApiKey(key)
+    inputKey.value = ''
+    isEditing.value = false
+  }
+}
+
+function startEdit(): void {
+  isEditing.value = true
+  inputKey.value = store.state.apiKey || ''
+}
+
+function cancelEdit(): void {
+  isEditing.value = false
+  inputKey.value = ''
+}
+
+function clearKey(): void {
+  store.clearApiKey()
+  isEditing.value = false
+  inputKey.value = ''
 }
 </script>
 
@@ -23,18 +53,47 @@ function saveKey(): void {
       aria-label="API Key 配置"
     >
       <h2 class="text-2xl font-bold mb-2 text-primary">
-        API Key
+        API Key 配置
       </h2>
       <p class="text-sm mb-6 text-fg-muted">
-        输入 DeepSeek API Key，安全保存在本地
+        DeepSeek API Key，安全保存在本地浏览器
       </p>
 
-      <form @submit.prevent="saveKey" class="flex flex-col gap-4">
+      <!-- 已设置 Key 的展示状态 -->
+      <div v-if="hasKey && !isEditing" class="flex flex-col gap-4">
+        <div class="p-4 rounded-xl bg-bg-elevated border border-border">
+          <p class="text-xs text-fg-subtle mb-1">当前 API Key</p>
+          <div class="flex items-center gap-2">
+            <code class="flex-1 text-sm font-mono text-fg select-all">{{ maskedKey }}</code>
+            <button
+              @click="showKey = !showKey"
+              class="text-sm px-2 py-1 rounded transition-colors text-fg-muted hover:text-fg cursor-pointer shrink-0"
+            >
+              {{ showKey ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          <p v-if="showKey" class="mt-2 text-xs font-mono text-fg break-all bg-bg p-2 rounded">
+            {{ store.state.apiKey }}
+          </p>
+        </div>
+
+        <div class="flex gap-3">
+          <button @click="startEdit" class="btn-primary flex-1">
+            🔄 更换 API Key
+          </button>
+          <button @click="clearKey" class="btn-danger flex-1">
+            🗑 清除 Key
+          </button>
+        </div>
+      </div>
+
+      <!-- 输入/编辑状态 -->
+      <form v-else @submit.prevent="saveKey" class="flex flex-col gap-4">
         <div class="relative">
           <input
             v-model="inputKey"
             :type="showKey ? 'text' : 'password'"
-            placeholder="sk-..."
+            :placeholder="isEditing ? '输入新的 API Key' : 'sk-...'"
             aria-label="API Key 输入"
             class="w-full px-4 py-3 rounded-lg border text-sm transition-all duration-200
                    bg-bg border-border text-fg placeholder:text-fg-subtle
@@ -50,13 +109,23 @@ function saveKey(): void {
           </button>
         </div>
 
-        <button
-          type="submit"
-          :disabled="!inputKey.trim()"
-          class="btn-primary w-full"
-        >
-          保存并开始使用
-        </button>
+        <div class="flex gap-3">
+          <button
+            type="submit"
+            :disabled="!inputKey.trim()"
+            class="btn-primary flex-1"
+          >
+            {{ isEditing ? '💾 保存新 Key' : '保存并开始使用' }}
+          </button>
+          <button
+            v-if="isEditing"
+            type="button"
+            @click="cancelEdit"
+            class="btn-ghost flex-1"
+          >
+            取消
+          </button>
+        </div>
 
         <a
           href="https://platform.deepseek.com/api_keys"
