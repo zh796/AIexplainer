@@ -37,7 +37,7 @@ function cacheKey(definition: string, theme: string): string {
   return String(hash)
 }
 
-/** 清理 Mermaid 输出的 SVG（移除脚本、外部资源、危险元素等） */
+/** 清理 Mermaid 输出的 SVG（移除脚本和危险属性，保留文字内容） */
 function sanitizeSvg(svg: string): string {
   return svg
     // 移除 script 标签及其内容
@@ -48,8 +48,7 @@ function sanitizeSvg(svg: string): string {
     // 移除外部资源引用（保留 data: URI）
     .replace(/xlink:href\s*=\s*"(?!data:)[^"]*"/gi, '')
     .replace(/href\s*=\s*"(?:https?:|javascript:)[^"]*"/gi, '')
-    // 移除 foreignObject（可嵌入任意 HTML）
-    .replace(/<foreignObject\b[\s\S]*?<\/foreignObject>/gi, '')
+    // foreignObject 保留（Mermaid 用它渲染节点文字），但移除内部的 script 和 on* 事件
     // 移除危险的动画/设置元素中带 href 的标签
     .replace(/<(?:animate|set)\b[^>]*href\s*=\s*"[^"]*"[^>]*\/?>/gi, '')
     // 移除 <use> 引用外部资源
@@ -66,12 +65,12 @@ function configureMermaid(): void {
     themeVariables: { ...v, fontSize: '14px' },
     flowchart: {
       htmlLabels: false, curve: 'basis',
-      nodeSpacing: 60, rankSpacing: 70, padding: 20, useMaxWidth: false,
+      nodeSpacing: 60, rankSpacing: 70, padding: 20, useMaxWidth: true,
     },
     sequence: {
       diagramMarginX: 50, diagramMarginY: 20, actorMargin: 50,
       boxMargin: 10, boxTextMargin: 5, noteMargin: 10, messageMargin: 35,
-      mirrorActors: true, useMaxWidth: false,
+      mirrorActors: true, useMaxWidth: true,
     },
     gantt: {
       titleTopMargin: 25, barHeight: 20, barGap: 4,

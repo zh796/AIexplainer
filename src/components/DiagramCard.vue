@@ -354,7 +354,7 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
           @mouseleave="onPanEnd"
         >
           <div
-            class="[&_svg]:h-auto [&_svg]:min-w-[500px] origin-top-left"
+            class="[&_svg]:max-w-full [&_svg]:h-auto origin-top-left"
             :style="{ transform: transformStyle, transition: isPanning ? 'none' : 'transform 0.3s ease' }"
             v-html="svgContent"
           />
