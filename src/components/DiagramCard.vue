@@ -493,6 +493,12 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
 :deep(svg) {
   border-radius: 8px;
 }
+/* foreignObject 内的文字容器：允许自然换行，不截断 */
+:deep(svg foreignObject div) {
+  overflow: visible !important;
+  white-space: normal !important;
+  word-break: break-word;
+}
 :deep(svg text) {
   -webkit-font-smoothing: antialiased;
   font-size: 14px !important;
@@ -509,6 +515,7 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
 :deep(svg .cluster rect) {
   rx: 8;
   ry: 8;
+  overflow: visible;
 }
 :deep(svg .edgeLabel rect) {
   rx: 4;

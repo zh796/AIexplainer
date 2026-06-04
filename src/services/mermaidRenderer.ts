@@ -65,7 +65,7 @@ function configureMermaid(): void {
     themeVariables: { ...v, fontSize: '14px' },
     flowchart: {
       htmlLabels: false, curve: 'basis',
-      nodeSpacing: 60, rankSpacing: 70, padding: 20, useMaxWidth: false,
+      nodeSpacing: 60, rankSpacing: 70, padding: 24, useMaxWidth: false,
     },
     sequence: {
       diagramMarginX: 50, diagramMarginY: 20, actorMargin: 50,
