@@ -44,12 +44,12 @@ export interface MermaidVars {
 // ====== 深色主题 ======
 const darkVars: MermaidVars = {
   primaryColor:'#3B82F6', primaryBorderColor:'#60A5FA', primaryTextColor:'#FFFFFF',
-  secondaryColor:'#1E293B', secondaryBorderColor:'#334155', secondaryTextColor:'#E5E7EB',
-  tertiaryColor:'#1A2332', tertiaryBorderColor:'#2D3A4A', tertiaryTextColor:'#93C5FD',
-  lineColor:'#475569', background:'#111827', mainBkg:'#111827', secondBkg:'#1A2332',
-  nodeBorder:'#334155', clusterBkg:'#0F172A', clusterBorder:'#1E293B',
+  secondaryColor:'#1E3A5F', secondaryBorderColor:'#3B82F6', secondaryTextColor:'#FFFFFF',
+  tertiaryColor:'#1E293B', tertiaryBorderColor:'#60A5FA', tertiaryTextColor:'#E5E7EB',
+  lineColor:'#64748B', background:'#0F172A', mainBkg:'#0F172A', secondBkg:'#1E293B',
+  nodeBorder:'#3B82F6', clusterBkg:'#0F172A', clusterBorder:'#1E293B',
   titleColor:'#F1F5F9', edgeLabelBackground:'#1E293B',
-  darkMode:true, textColor:'#E5E7EB', labelTextColor:'#b4bcc6',
+  darkMode:true, textColor:'#F1F5F9', labelTextColor:'#E5E7EB',
   actorBorder:'#334155', actorBkg:'#1E293B', actorTextColor:'#E5E7EB',
   actorLineColor:'#475569', signalColor:'#E5E7EB', signalTextColor:'#E5E7EB',
   labelBoxBkgColor:'#1E293B', labelBoxBorderColor:'#334155',
@@ -78,13 +78,13 @@ const darkVars: MermaidVars = {
 
 // ====== 浅色主题 ======
 const lightVars: MermaidVars = {
-  primaryColor:'#1D4ED8', primaryBorderColor:'#1E40AF', primaryTextColor:'#FFFFFF',
-  secondaryColor:'#E2E8F0', secondaryBorderColor:'#94A3B8', secondaryTextColor:'#000000',
-  tertiaryColor:'#DBEAFE', tertiaryBorderColor:'#60A5FA', tertiaryTextColor:'#1a1a1a',
-  lineColor:'#94A3B8', background:'#FFFFFF', mainBkg:'#FFFFFF', secondBkg:'#F1F5F9',
-  nodeBorder:'#94A3B8', clusterBkg:'#F1F5F9', clusterBorder:'#94A3B8',
+  primaryColor:'#2563EB', primaryBorderColor:'#1D4ED8', primaryTextColor:'#FFFFFF',
+  secondaryColor:'#E0E7FF', secondaryBorderColor:'#818CF8', secondaryTextColor:'#1E293B',
+  tertiaryColor:'#DBEAFE', tertiaryBorderColor:'#60A5FA', tertiaryTextColor:'#1E293B',
+  lineColor:'#64748B', background:'#F8FAFC', mainBkg:'#F8FAFC', secondBkg:'#F1F5F9',
+  nodeBorder:'#2563EB', clusterBkg:'#F1F5F9', clusterBorder:'#94A3B8',
   titleColor:'#000000', edgeLabelBackground:'#F1F5F9',
-  darkMode:false, textColor:'#000000', labelTextColor:'#1a1a1a',
+  darkMode:false, textColor:'#0F172A', labelTextColor:'#1E293B',
   actorBorder:'#94A3B8', actorBkg:'#F1F5F9', actorTextColor:'#000000',
   actorLineColor:'#64748B', signalColor:'#000000', signalTextColor:'#000000',
   labelBoxBkgColor:'#F1F5F9', labelBoxBorderColor:'#94A3B8',
@@ -148,13 +148,13 @@ const sepiaVars: MermaidVars = {
 
 // ====== 霓虹主题 (Neon Abyss) ======
 const neonVars: MermaidVars = {
-  primaryColor: '#00f0ff', primaryBorderColor: '#33f3ff', primaryTextColor: '#0a0a0f',
-  secondaryColor: '#111118', secondaryBorderColor: 'rgba(0,240,255,0.15)', secondaryTextColor: '#c4b5fd',
-  tertiaryColor: '#1a1a24', tertiaryBorderColor: 'rgba(168,85,247,0.2)', tertiaryTextColor: '#a78bfa',
-  lineColor: 'rgba(0,240,255,0.25)', background: '#0a0a0f', mainBkg: '#0a0a0f', secondBkg: '#111118',
-  nodeBorder: 'rgba(0,240,255,0.2)', clusterBkg: '#0d0d14', clusterBorder: 'rgba(0,240,255,0.12)',
+  primaryColor: '#164e63', primaryBorderColor: '#00f0ff', primaryTextColor: '#e0f7fa',
+  secondaryColor: '#1a1a2e', secondaryBorderColor: 'rgba(0,240,255,0.3)', secondaryTextColor: '#e4d4ff',
+  tertiaryColor: '#1e1e3a', tertiaryBorderColor: 'rgba(168,85,247,0.4)', tertiaryTextColor: '#e4d4ff',
+  lineColor: 'rgba(0,240,255,0.4)', background: '#0a0a12', mainBkg: '#0a0a12', secondBkg: '#111122',
+  nodeBorder: 'rgba(0,240,255,0.35)', clusterBkg: '#0d0d14', clusterBorder: 'rgba(0,240,255,0.12)',
   titleColor: '#c4b5fd', edgeLabelBackground: '#111118',
-  darkMode: true, textColor: '#e4d4ff', labelTextColor: '#c4b5fd',
+  darkMode: true, textColor: '#f0eaff', labelTextColor: '#e4d4ff',
   actorBorder: 'rgba(255,0,229,0.3)', actorBkg: '#111118', actorTextColor: '#e4d4ff',
   actorLineColor: 'rgba(0,240,255,0.3)', signalColor: '#e4d4ff', signalTextColor: '#e4d4ff',
   labelBoxBkgColor: '#111118', labelBoxBorderColor: 'rgba(0,240,255,0.2)',
