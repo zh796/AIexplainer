@@ -17,13 +17,14 @@ defineProps<{
 <template>
   <div class="absolute inset-0 flex items-center justify-center p-4 sm:p-6">
     <div
-      class="w-full max-w-3xl xl:max-w-4xl h-auto min-h-[320px] sm:min-h-[380px]
+      class="h-auto min-h-[320px] sm:min-h-[380px]
              max-h-[85vh] rounded-2xl px-4 sm:px-8 py-4 sm:py-6 flex flex-col overflow-y-auto
              bg-bg-card border border-border shadow-sm"
+      :class="page.pageType === 'diagram' ? 'w-full max-w-full' : 'w-full max-w-3xl xl:max-w-4xl'"
       role="region"
       aria-label="教程卡片"
     >
-      <div class="flex-1 flex flex-col justify-center min-h-[260px]">
+      <div class="flex-1 flex flex-col justify-center" :class="page.pageType === 'diagram' ? '' : 'min-h-[260px]'">
         <TextCard v-if="page.pageType === 'text'" :page="page" />
         <CodeCard v-else-if="page.pageType === 'code'" :page="page" />
         <DiagramCard v-else-if="page.pageType === 'diagram'" :page="page" />

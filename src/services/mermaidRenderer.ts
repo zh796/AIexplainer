@@ -65,12 +65,12 @@ function configureMermaid(): void {
     themeVariables: { ...v, fontSize: '14px' },
     flowchart: {
       htmlLabels: false, curve: 'basis',
-      nodeSpacing: 60, rankSpacing: 70, padding: 20, useMaxWidth: true,
+      nodeSpacing: 60, rankSpacing: 70, padding: 20, useMaxWidth: false,
     },
     sequence: {
       diagramMarginX: 50, diagramMarginY: 20, actorMargin: 50,
       boxMargin: 10, boxTextMargin: 5, noteMargin: 10, messageMargin: 35,
-      mirrorActors: true, useMaxWidth: true,
+      mirrorActors: true, useMaxWidth: false,
     },
     gantt: {
       titleTopMargin: 25, barHeight: 20, barGap: 4,
