@@ -8,7 +8,6 @@ import { useTutorialStore } from '../stores/tutorialStore'
 import { useToast } from '../composables/useToast'
 import { gsap } from '../composables/useGsap'
 import { getPageSummary } from '../utils/pageSummary'
-import { savePage } from '../services/saveStore'
 import { saveFullTutorial } from '../services/db'
 import TutorialCard from './TutorialCard.vue'
 import ThemeToggle from './ThemeToggle.vue'
@@ -20,8 +19,12 @@ const emit = defineEmits<{
 
 const store = useTutorialStore()
 const toast = useToast()
-const savedThisPage = ref(false)
 const isSaving = ref(false)
+
+// 询问更多
+const showAskInput = ref(false)
+const followUpQuestion = ref('')
+const askInputRef = ref<HTMLInputElement | null>(null)
 
 
 
@@ -80,19 +83,28 @@ function onLeave(el: Element, done: () => void): void {
   })
 }
 
-async function bookmarkCurrent(): Promise<void> {
-  const page = store.currentPage
-  if (!page) return
-  const concept = store.state.conceptInput
-  const idx = store.state.currentPageIndex
-  await savePage(concept, page, idx)
-  savedThisPage.value = true
-  toast.success('已保存 ✓')
-}
-
 function onPageChange(newIndex: number): void {
   store.goToPage(newIndex)
-  savedThisPage.value = false
+}
+
+function toggleAskInput(): void {
+  showAskInput.value = !showAskInput.value
+  if (showAskInput.value) {
+    followUpQuestion.value = ''
+    nextTick(() => askInputRef.value?.focus())
+  }
+}
+
+function submitFollowUp(): void {
+  const q = followUpQuestion.value.trim()
+  if (!q) return
+  if (!store.state.apiKey) {
+    toast.warning('请先配置 DeepSeek API Key')
+    return
+  }
+  showAskInput.value = false
+  store.state.conceptInput = q
+  store.startGeneration()
 }
 
 async function handleSaveTutorial(): Promise<void> {
@@ -127,10 +139,9 @@ async function handleSaveTutorial(): Promise<void> {
 
 // ====== 键盘 ======
 function onKeyDown(e: KeyboardEvent): void {
-  if (e.key === 'ArrowLeft')  { e.preventDefault(); store.prevPage(); savedThisPage.value = false }
-  if (e.key === 'ArrowRight') { e.preventDefault(); store.nextPage(); savedThisPage.value = false }
-  if (e.key === 'Escape')     { emit('open-saves') }
-  if (e.ctrlKey && e.key === 's') { e.preventDefault(); bookmarkCurrent() }
+  if (e.key === 'ArrowLeft')  { e.preventDefault(); store.prevPage() }
+  if (e.key === 'ArrowRight') { e.preventDefault(); store.nextPage() }
+  if (e.key === 'Escape')     { if (showAskInput.value) showAskInput.value = false; else emit('open-saves') }
 }
 onMounted(() => window.addEventListener('keydown', onKeyDown))
 onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
@@ -145,7 +156,6 @@ function onTouchEnd(e: TouchEvent): void {
   const dy = e.changedTouches[0].clientY - touchStartY
   if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
     dx > 0 ? store.prevPage() : store.nextPage()
-    savedThisPage.value = false
   }
 }
 </script>
@@ -210,9 +220,28 @@ function onTouchEnd(e: TouchEvent): void {
         @go="onPageChange"
       />
 
+      <!-- 询问更多输入栏 -->
+      <Transition name="ask-slide">
+        <div v-if="showAskInput" class="flex items-center gap-2 mb-2">
+          <input
+            ref="askInputRef"
+            v-model="followUpQuestion"
+            type="text"
+            placeholder="输入你想深入了解的内容..."
+            class="flex-1 px-4 py-2 rounded-lg text-sm bg-bg border border-border text-fg placeholder:text-fg-subtle
+                   focus:border-primary focus:ring-2 focus:ring-primary/20"
+            @keydown.enter="submitFollowUp"
+            @keydown.escape="showAskInput = false"
+          />
+          <button @click="submitFollowUp" class="btn-primary text-sm px-4 py-2 whitespace-nowrap">
+            🚀 提问
+          </button>
+        </div>
+      </Transition>
+
       <div class="flex items-center justify-between mt-2 gap-2">
         <button
-          @click="store.prevPage(); savedThisPage = false"
+          @click="store.prevPage()"
           :disabled="store.isFirstPage"
           class="btn-ghost"
           aria-label="上一页"
@@ -221,14 +250,12 @@ function onTouchEnd(e: TouchEvent): void {
         </button>
 
         <button
-          @click="bookmarkCurrent"
+          @click="toggleAskInput"
           class="btn-ghost"
-          :class="{
-            '!bg-success/10 !text-success !border-success/50': savedThisPage,
-          }"
-          aria-label="保存当前页面"
+          :class="{ '!bg-primary/10 !text-primary !border-primary/30': showAskInput }"
+          aria-label="询问更多"
         >
-          {{ savedThisPage ? '已保存 ✓' : '📌 记录此页' }}
+          🤖 询问更多
         </button>
 
         <button
@@ -250,7 +277,7 @@ function onTouchEnd(e: TouchEvent): void {
         </button>
         <button
           v-else
-          @click="store.nextPage(); savedThisPage = false"
+          @click="store.nextPage()"
           class="btn-primary"
           aria-label="下一页"
         >
@@ -260,3 +287,22 @@ function onTouchEnd(e: TouchEvent): void {
     </footer>
   </div>
 </template>
+
+<style scoped>
+.ask-slide-enter-active {
+  transition: all 0.25s ease;
+}
+.ask-slide-leave-active {
+  transition: all 0.15s ease;
+}
+.ask-slide-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+  max-height: 0;
+}
+.ask-slide-leave-to {
+  opacity: 0;
+  transform: translateY(4px);
+  max-height: 0;
+}
+</style>
