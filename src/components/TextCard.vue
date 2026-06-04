@@ -43,7 +43,7 @@ function renderContent(text: string): string {
   html = escapeHtml(html)
 
   // 3. 标题（替换后的 $1 已经是安全的转义文本）
-  html = html.replace(/^### (.+)$/gm, '<h4 class="text-base font-semibold mt-3 mb-1">$1</h4>')
+  html = html.replace(/^### (.+)$/gm, '<h4 class="text-base sm:text-lg font-semibold mt-3 mb-1">$1</h4>')
   html = html.replace(/^## (.+)$/gm, '<h3 class="text-lg font-semibold mt-3 mb-1">$1</h3>')
   html = html.replace(/^# (.+)$/gm, '<h2 class="text-xl font-semibold mt-3 mb-1">$1</h2>')
 
@@ -77,7 +77,7 @@ const paragraphs = computed(() => {
     <!-- 解释说明 -->
     <p
       v-if="page.explanation && !hideExplanation"
-      class="text-sm px-4 py-2 rounded-lg mb-2 animate-fade-in-up bg-primary/10 text-primary"
+      class="text-sm sm:text-base px-4 py-2 rounded-lg mb-2 animate-fade-in-up bg-primary/10 text-primary"
     >
       💡 {{ page.explanation }}
     </p>
@@ -86,7 +86,7 @@ const paragraphs = computed(() => {
     <div
       v-for="(para, i) in paragraphs"
       :key="i"
-      class="text-base leading-relaxed max-w-[65ch] animate-fade-in-up text-fg"
+      class="text-base sm:text-lg leading-relaxed max-w-[65ch] animate-fade-in-up text-fg"
       :style="{
         animationDelay: `${(page.explanation ? 1 : 0) * 80 + i * 80 + 50}ms`,
         animationFillMode: 'backwards',

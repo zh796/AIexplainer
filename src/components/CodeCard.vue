@@ -44,14 +44,14 @@ const langLabel = computed(() => {
 
     <!-- 代码块 -->
     <pre
-      class="p-5 rounded-lg text-sm leading-relaxed overflow-x-auto whitespace-pre
+      class="p-5 rounded-lg text-sm sm:text-base leading-relaxed overflow-x-auto whitespace-pre
              bg-bg-elevated text-fg border border-border"
     ><code>{{ page.content }}</code></pre>
 
     <!-- 代码说明 -->
     <p
       v-if="page.explanation && !hideExplanation"
-      class="text-sm px-4 py-3 rounded-lg leading-relaxed bg-accent/10 text-accent"
+      class="text-sm sm:text-base px-4 py-3 rounded-lg leading-relaxed bg-accent/10 text-accent"
     >
       📖 {{ page.explanation }}
     </p>

@@ -17,7 +17,7 @@ defineProps<{
 <template>
   <div class="absolute inset-0 flex items-center justify-center p-4 sm:p-6">
     <div
-      class="w-full max-w-2xl xl:max-w-3xl h-auto min-h-[320px] sm:min-h-[380px]
+      class="w-full max-w-3xl xl:max-w-4xl h-auto min-h-[320px] sm:min-h-[380px]
              max-h-[85vh] rounded-2xl px-4 sm:px-8 py-4 sm:py-6 flex flex-col overflow-y-auto
              bg-bg-card border border-border shadow-sm"
       role="region"

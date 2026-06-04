@@ -354,7 +354,7 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
           @mouseleave="onPanEnd"
         >
           <div
-            class="[&_svg]:max-w-full [&_svg]:h-auto origin-top-left"
+            class="[&_svg]:h-auto [&_svg]:min-w-[500px] origin-top-left"
             :style="{ transform: transformStyle, transition: isPanning ? 'none' : 'transform 0.3s ease' }"
             v-html="svgContent"
           />
@@ -455,7 +455,7 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
     <!-- ====== 补充解释 ====== -->
     <p
       v-if="page.explanation && !hideExplanation"
-      class="text-sm px-4 py-3 rounded-lg leading-relaxed w-full bg-accent/10 text-accent"
+      class="text-sm sm:text-base px-4 py-3 rounded-lg leading-relaxed w-full bg-accent/10 text-accent"
     >
       📖 {{ page.explanation }}
     </p>
@@ -495,6 +495,12 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
 }
 :deep(svg text) {
   -webkit-font-smoothing: antialiased;
+  font-size: 14px !important;
+}
+:deep(svg .nodeLabel),
+:deep(svg .edgeLabel text),
+:deep(svg .edgeLabel span) {
+  font-size: 15px !important;
 }
 :deep(svg .node rect),
 :deep(svg .node circle),

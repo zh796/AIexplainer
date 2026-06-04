@@ -63,20 +63,20 @@ function configureMermaid(): void {
   mermaid.initialize({
     startOnLoad: false,
     theme: 'base',
-    themeVariables: { ...v },
+    themeVariables: { ...v, fontSize: '14px' },
     flowchart: {
       htmlLabels: false, curve: 'basis',
-      nodeSpacing: 50, rankSpacing: 60, padding: 18, useMaxWidth: true,
+      nodeSpacing: 60, rankSpacing: 70, padding: 20, useMaxWidth: false,
     },
     sequence: {
       diagramMarginX: 50, diagramMarginY: 20, actorMargin: 50,
       boxMargin: 10, boxTextMargin: 5, noteMargin: 10, messageMargin: 35,
-      mirrorActors: true, useMaxWidth: true,
+      mirrorActors: true, useMaxWidth: false,
     },
     gantt: {
       titleTopMargin: 25, barHeight: 20, barGap: 4,
       topPadding: 50, leftPadding: 75, gridLineStartPadding: 35,
-      fontSize: 11, sectionFontSize: 12,
+      fontSize: 13, sectionFontSize: 14,
     },
   })
 }

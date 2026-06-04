@@ -63,7 +63,7 @@ function getOptionClasses(optKey: string): string {
 <template>
   <div ref="quizContainer" class="flex flex-col gap-5 relative overflow-hidden">
     <!-- 题目 -->
-    <h3 class="text-xl font-semibold leading-relaxed text-fg">
+    <h3 class="text-lg sm:text-xl font-semibold leading-relaxed text-fg">
       {{ page.content }}
     </h3>
 
