@@ -501,12 +501,10 @@ onUnmounted(() => window.removeEventListener('wheel', preventScroll))
 }
 :deep(svg text) {
   -webkit-font-smoothing: antialiased;
-  font-size: 14px !important;
 }
 :deep(svg .nodeLabel),
 :deep(svg .edgeLabel text),
 :deep(svg .edgeLabel span) {
-  font-size: 15px !important;
 }
 :deep(svg .node rect),
 :deep(svg .node circle),
