@@ -51,20 +51,9 @@ export async function streamTutorial(
 
     if (!response.ok) {
       const errBody = await response.text().catch(() => "")
-      const status = response.status
-      if (status === 401) {
-        throw new Error("API Key 验证失败：当前 Key 无法通过服务商验证，请检查后重试。")
-      } else if (status === 429) {
-        throw new Error("请求频率过高或额度不足：当前模型暂时无法继续生成，稍后重试或切换模型可能恢复。")
-      } else if (status === 403) {
-        throw new Error("API 访问被拒绝：当前 Key 没有权限访问该模型，请检查 Key 配置。")
-      } else if (status >= 500) {
-        throw new Error("AI 服务暂时不可用：服务器出现异常，请稍后重试。")
-      } else {
-        throw new Error(`API 请求失败 (${status}): ${errBody}`)
-      }
+      throw new Error(`API 请求失败 (${response.status}): ${errBody}`)
     }
-    if (!response.body) throw new Error("当前浏览器不支持流式读取，请尝试使用现代浏览器（Chrome / Edge / Firefox）。")
+    if (!response.body) throw new Error("浏览器不支持流式读取")
 
     const reader = response.body.getReader()
     const decoder = new TextDecoder()
@@ -89,11 +78,6 @@ export async function streamTutorial(
       }
     }
   } catch (err) {
-    const raw = err instanceof Error ? err.message : "未知错误"
-    let message = raw
-    if (raw === "Failed to fetch" || raw.includes("NetworkError") || raw.includes("Network Error")) {
-      message = "网络连接异常：无法到达 AI 服务，请检查网络或代理配置后重试。"
-    }
-    callbacks.onError(message)
+    callbacks.onError(err instanceof Error ? err.message : "未知错误")
   }
 }

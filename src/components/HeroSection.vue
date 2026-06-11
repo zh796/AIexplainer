@@ -4,16 +4,12 @@ import { useTutorialStore } from "../stores/tutorialStore"
 import { useFluidCanvas } from "../composables/useFluidCanvas"
 import { useToast } from "../composables/useToast"
 import { staggerEnter } from "../composables/useGsap"
-
-const props = defineProps<{
-  hasKey: boolean
-}>()
+import type { Theme } from "../types"
 
 const emit = defineEmits<{
   (e: "open-saves"): void
   (e: "explore"): void
   (e: "start-learning"): void
-  (e: "open-api-key"): void
 }>()
 
 const store = useTutorialStore()
@@ -22,38 +18,19 @@ const toast = useToast()
 // Canvas background
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const { triggerWave } = useFluidCanvas(canvasRef, {
-  particleCount: 30,
+  particleCount: 40,
   gridSpacing: 55,
   attractRadius: 220,
 })
 
 // GSAP entrance
-const titleRef = ref<HTMLElement | null>(null)
-const inputCardRef = ref<HTMLElement | null>(null)
-const featuresRef = ref<HTMLElement | null>(null)
-const howItWorksRef = ref<HTMLElement | null>(null)
-
+const heroContentRef = ref<HTMLElement | null>(null)
 onMounted(() => {
   nextTick(() => {
-    staggerEnter(titleRef.value!, {
-      stagger: 0.12,
-      from: { y: 40, opacity: 0, scale: 0.95 },
-      to: { duration: 0.6, ease: "back.out(1.7)" },
-    })
-    staggerEnter(inputCardRef.value!, {
+    staggerEnter(heroContentRef.value!, {
       stagger: 0.1,
-      from: { y: 28, opacity: 0 },
-      to: { duration: 0.5, ease: "power3.out", delay: 0.25 },
-    })
-    staggerEnter(featuresRef.value!, {
-      stagger: 0.08,
-      from: { opacity: 0, y: 16 },
-      to: { duration: 0.4, delay: 0.4 },
-    })
-    staggerEnter(howItWorksRef.value!, {
-      stagger: 0.06,
-      from: { opacity: 0, y: 12 },
-      to: { duration: 0.35, delay: 0.55 },
+      from: { y: 36, opacity: 0 },
+      to: { duration: 0.55, ease: "power3.out" },
     })
   })
 })
@@ -66,46 +43,65 @@ function handleSubmit(): void {
     conceptInputRef.value?.focus()
     return
   }
+  if (!store.state.apiKey) {
+    toast.warning("请先配置 DeepSeek API Key")
+    return
+  }
   const rect = canvasRef.value?.getBoundingClientRect()
   if (rect) triggerWave(rect.width / 2, rect.height / 2)
+  store.startGeneration()
   emit("start-learning")
 }
 
 function handleQuickConcept(concept: string): void {
+  if (!store.state.apiKey) { toast.warning("请先配置 DeepSeek API Key"); return }
   store.state.conceptInput = concept
-  handleSubmit()
+  store.startGeneration()
+  emit("start-learning")
 }
 
 const exampleConcepts = ["闭包是什么", "快速排序原理", "区块链入门", "RESTful API"]
 
-const steps = [
-  { icon: "✏️", title: "输入概念", desc: "输入你想深入学习的任意主题" },
-  { icon: "🤖", title: "AI 生成", desc: "实时生成分步讲解、代码与测验" },
-  { icon: "💾", title: "保存复习", desc: "保存到本地，随时回看已学内容" },
+const themes: { key: Theme; label: string; icon: string }[] = [
+  { key: "neon", label: "霓虹", icon: "💠" },
+  { key: "light", label: "浅色", icon: "☀️" },
+  { key: "dark", label: "深色", icon: "🌙" },
+  { key: "sepia", label: "护眼", icon: "📜" },
 ]
+
+function switchTheme(theme: Theme): void {
+  store.setTheme(theme)
+}
 </script>
 
 <template>
   <div class="relative min-h-[85vh] flex flex-col">
+    <!-- Canvas 背景 -->
     <canvas
       ref="canvasRef"
       class="absolute inset-0 z-0 pointer-events-none"
       style="width:100%;height:100%"
     />
 
-    <!-- Top bar: saves button only (theme toggle moved to global header) -->
+    <!-- 顶部操作栏 -->
     <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
+      <button
+        @click="switchTheme(themes[(themes.findIndex(t => t.key === store.state.theme) + 1) % themes.length].key)"
+        class="btn-ghost text-xs py-1.5 px-3 cursor-pointer"
+        :title="'主题：' + themes.find(t => t.key === store.state.theme)?.label"
+      >
+        {{ themes.find(t => t.key === store.state.theme)?.icon }}
+      </button>
       <button @click="emit('open-saves')" class="btn-ghost text-xs py-1.5 px-3" aria-label="文件管理器">
-        📂 已保存
+        📂
       </button>
     </div>
 
-    <!-- Main hero content -->
-    <div class="flex-1 flex items-center justify-center p-4 sm:p-6 relative z-10">
-      <div class="w-full max-w-2xl flex flex-col items-center gap-8">
-
-        <!-- Title -->
-        <div ref="titleRef" class="text-center">
+    <!-- 主内容区 -->
+    <div class="flex-1 flex items-center justify-center p-4 sm:p-6">
+      <div ref="heroContentRef" class="w-full max-w-2xl flex flex-col items-center gap-8">
+        <!-- 标题 -->
+        <div class="text-center">
           <h1
             class="text-5xl sm:text-6xl font-extrabold mb-4 text-fg tracking-tight"
             style="font-family:var(--font-display,inherit)"
@@ -117,8 +113,8 @@ const steps = [
           </p>
         </div>
 
-        <!-- Search input card -->
-        <div ref="inputCardRef" class="w-full bg-bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-1.5 shadow-lg">
+        <!-- 搜索输入框 -->
+        <div class="w-full bg-bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-1.5 shadow-lg">
           <form @submit.prevent="handleSubmit" class="flex items-center gap-2">
             <input
               id="hero-concept-input"
@@ -135,9 +131,10 @@ const steps = [
                      hover:bg-primary-hover transition-all duration-200
                      disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
-              {{ store.state.isLoading ? "生成中..." : (hasKey ? "开始学习 →" : "开始学习（需配置 Key）") }}
+              {{ store.state.isLoading ? "生成中..." : "开始学习 →" }}
             </button>
           </form>
+          <!-- 快捷标签 -->
           <div class="flex flex-wrap gap-1.5 px-4 pb-2.5 mt-1">
             <span class="text-xs text-fg-subtle mr-1 pt-1">试试:</span>
             <button
@@ -152,18 +149,8 @@ const steps = [
           </div>
         </div>
 
-        <!-- API Key hint (only when not configured) -->
-        <div v-if="!hasKey" class="text-center">
-          <button
-            @click="emit('open-api-key')"
-            class="text-xs text-fg-subtle hover:text-primary transition-colors cursor-pointer"
-          >
-            ⚙️ 配置 API Key（首次使用需配置）
-          </button>
-        </div>
-
-        <!-- Features -->
-        <div ref="featuresRef" class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+        <!-- 特性简介 -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
           <div class="flex items-start gap-3 p-4 rounded-xl bg-bg-card/50 border border-border/50">
             <span class="text-2xl shrink-0">📝</span>
             <div>
@@ -187,7 +174,7 @@ const steps = [
           </div>
         </div>
 
-        <!-- How it works -->
+        <!-- 了解更多提示 -->
         <button
           @click="emit('explore')"
           class="flex items-center gap-2 px-4 py-2 text-sm text-fg-muted hover:text-primary transition-colors cursor-pointer"
@@ -196,23 +183,5 @@ const steps = [
         </button>
       </div>
     </div>
-
-    <!-- How it works section -->
-    <section ref="howItWorksRef" class="relative z-10 border-t border-border">
-      <div class="max-w-2xl mx-auto px-4 py-10 sm:py-14">
-        <h2 class="text-center text-lg font-semibold text-fg mb-8">如何使用</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div
-            v-for="(step, i) in steps"
-            :key="i"
-            class="flex flex-col items-center text-center p-5 rounded-xl bg-bg-card/50 border border-border/50"
-          >
-            <span class="text-2xl mb-2">{{ step.icon }}</span>
-            <h3 class="text-sm font-semibold text-fg mb-1">{{ step.title }}</h3>
-            <p class="text-xs text-fg-muted leading-relaxed">{{ step.desc }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
