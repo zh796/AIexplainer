@@ -4,7 +4,6 @@ import { useTutorialStore } from "../stores/tutorialStore"
 import { useFluidCanvas } from "../composables/useFluidCanvas"
 import { useToast } from "../composables/useToast"
 import { staggerEnter } from "../composables/useGsap"
-import type { Theme } from "../types"
 
 const emit = defineEmits<{
   (e: "open-saves"): void
@@ -15,7 +14,6 @@ const emit = defineEmits<{
 const store = useTutorialStore()
 const toast = useToast()
 
-// Canvas background
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const { triggerWave } = useFluidCanvas(canvasRef, {
   particleCount: 40,
@@ -23,7 +21,6 @@ const { triggerWave } = useFluidCanvas(canvasRef, {
   attractRadius: 220,
 })
 
-// GSAP entrance
 const heroContentRef = ref<HTMLElement | null>(null)
 onMounted(() => {
   nextTick(() => {
@@ -54,57 +51,32 @@ function handleSubmit(): void {
 }
 
 function handleQuickConcept(concept: string): void {
-  if (!store.state.apiKey) { toast.warning("请先配置 DeepSeek API Key"); return }
+  if (!store.state.apiKey) {
+    toast.warning("请先配置 DeepSeek API Key")
+    return
+  }
   store.state.conceptInput = concept
   store.startGeneration()
   emit("start-learning")
 }
 
 const exampleConcepts = ["闭包是什么", "快速排序原理", "区块链入门", "RESTful API"]
-
-const themes: { key: Theme; label: string; icon: string }[] = [
-  { key: "neon", label: "霓虹", icon: "💠" },
-  { key: "light", label: "浅色", icon: "☀️" },
-  { key: "dark", label: "深色", icon: "🌙" },
-  { key: "sepia", label: "护眼", icon: "📜" },
-]
-
-function switchTheme(theme: Theme): void {
-  store.setTheme(theme)
-}
 </script>
 
 <template>
   <div class="relative min-h-screen flex flex-col">
-    <!-- Canvas 背景 -->
     <canvas
       ref="canvasRef"
       class="absolute inset-0 z-0 pointer-events-none"
-      style="width:100%;height:100%"
+      style="width: 100%; height: 100%"
     />
 
-    <!-- 顶部操作栏 -->
-    <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
-      <button
-        @click="switchTheme(themes[(themes.findIndex(t => t.key === store.state.theme) + 1) % themes.length].key)"
-        class="btn-ghost text-xs py-1.5 px-3 cursor-pointer"
-        :title="'主题：' + themes.find(t => t.key === store.state.theme)?.label"
-      >
-        {{ themes.find(t => t.key === store.state.theme)?.icon }}
-      </button>
-      <button @click="emit('open-saves')" class="btn-ghost text-xs py-1.5 px-3" aria-label="文件管理器">
-        📂
-      </button>
-    </div>
-
-    <!-- 主内容区 -->
-    <div class="flex-1 flex items-center justify-center p-4 sm:p-6">
+    <div class="flex-1 flex items-center justify-center p-4 sm:p-6 pt-16">
       <div ref="heroContentRef" class="w-full max-w-2xl flex flex-col items-center gap-8">
-        <!-- 标题 -->
         <div class="text-center">
           <h1
-            class="text-5xl sm:text-6xl font-extrabold mb-4 text-fg tracking-tight"
-            style="font-family:var(--font-display,inherit)"
+            class="hero-title text-5xl sm:text-6xl font-extrabold mb-4 tracking-tight text-fg"
+            style="font-family: var(--font-display, inherit)"
           >
             AI <span class="text-primary">Explainer</span>
           </h1>
@@ -113,7 +85,6 @@ function switchTheme(theme: Theme): void {
           </p>
         </div>
 
-        <!-- 搜索输入框 -->
         <div class="w-full bg-bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-1.5 shadow-lg">
           <form @submit.prevent="handleSubmit" class="flex items-center gap-2">
             <input
@@ -127,29 +98,25 @@ function switchTheme(theme: Theme): void {
             <button
               type="submit"
               :disabled="store.state.isLoading"
-              class="shrink-0 px-6 py-3 rounded-xl bg-primary text-primary-fg font-semibold text-sm
-                     hover:bg-primary-hover transition-all duration-200
-                     disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              class="shrink-0 px-6 py-3 rounded-xl bg-primary text-primary-fg font-semibold text-sm hover:bg-primary-hover transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               {{ store.state.isLoading ? "生成中..." : "开始学习 →" }}
             </button>
           </form>
-          <!-- 快捷标签 -->
+
           <div class="flex flex-wrap gap-1.5 px-4 pb-2.5 mt-1">
             <span class="text-xs text-fg-subtle mr-1 pt-1">试试:</span>
             <button
-              v-for="example in exampleConcepts" :key="example"
+              v-for="example in exampleConcepts"
+              :key="example"
               @click="handleQuickConcept(example)"
-              class="px-3 py-1 rounded-full text-xs transition-all duration-200 cursor-pointer
-                     bg-primary/10 text-primary border border-primary/20
-                     hover:bg-primary/20 active:scale-95"
+              class="px-3 py-1 rounded-full text-xs transition-all duration-200 cursor-pointer bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 active:scale-95"
             >
               {{ example }}
             </button>
           </div>
         </div>
 
-        <!-- 特性简介 -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
           <div class="flex items-start gap-3 p-4 rounded-xl bg-bg-card/50 border border-border/50">
             <span class="text-2xl shrink-0">📝</span>
@@ -174,7 +141,6 @@ function switchTheme(theme: Theme): void {
           </div>
         </div>
 
-        <!-- 了解更多提示 -->
         <button
           @click="emit('explore')"
           class="flex items-center gap-2 px-4 py-2 text-sm text-fg-muted hover:text-primary transition-colors cursor-pointer"
@@ -185,3 +151,9 @@ function switchTheme(theme: Theme): void {
     </div>
   </div>
 </template>
+
+<style scoped>
+.hero-title {
+  text-shadow: 0 0 48px rgba(0, 232, 255, 0.18);
+}
+</style>
