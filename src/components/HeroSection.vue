@@ -75,7 +75,7 @@ function switchTheme(theme: Theme): void {
 </script>
 
 <template>
-  <div class="relative min-h-[85vh] flex flex-col">
+  <div class="relative min-h-screen flex flex-col">
     <!-- Canvas 背景 -->
     <canvas
       ref="canvasRef"
