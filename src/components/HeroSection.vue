@@ -85,6 +85,7 @@ const exampleConcepts = ["闭包是什么", "快速排序原理", "区块链入�
           </p>
         </div>
 
+        <!-- 搜索输入框 -->
         <div class="w-full bg-bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-1.5 shadow-lg">
           <form @submit.prevent="handleSubmit" class="flex items-center gap-2">
             <input
@@ -103,18 +104,19 @@ const exampleConcepts = ["闭包是什么", "快速排序原理", "区块链入�
               {{ store.state.isLoading ? "生成中..." : "开始学习 →" }}
             </button>
           </form>
+        </div>
 
-          <div class="flex flex-wrap gap-1.5 px-4 pb-2.5 mt-1">
-            <span class="text-xs text-fg-subtle mr-1 pt-1">试试:</span>
-            <button
-              v-for="example in exampleConcepts"
-              :key="example"
-              @click="handleQuickConcept(example)"
-              class="px-3 py-1 rounded-full text-xs transition-all duration-200 cursor-pointer bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 active:scale-95"
-            >
-              {{ example }}
-            </button>
-          </div>
+        <!-- 快捷标签（搜索栏外部） -->
+        <div class="flex flex-wrap items-center justify-center gap-2">
+          <span class="text-xs text-fg-subtle">试试:</span>
+          <button
+            v-for="example in exampleConcepts"
+            :key="example"
+            @click="handleQuickConcept(example)"
+            class="px-3 py-1 rounded-full text-xs transition-all duration-200 cursor-pointer bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 active:scale-95"
+          >
+            {{ example }}
+          </button>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
