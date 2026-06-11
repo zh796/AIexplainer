@@ -18,6 +18,7 @@ const emit = defineEmits<{
   (e: 'back-home'): void
 }>()
 
+const props = defineProps<{ inline?: boolean }>()
 const store = useTutorialStore()
 const toast = useToast()
 
@@ -88,7 +89,7 @@ function scrollToChapter(id: string) {
 }
 
 onMounted(() => {
-  const scroller = exploreRef.value
+  const scroller = props.inline ? (document.getElementById("home-scroller") as HTMLElement || exploreRef.value) : exploreRef.value
   if (!scroller) return
 
   // ====== 入场动画（关键修复：scroller 必须指向实际滚动容器） ======
@@ -234,7 +235,7 @@ function onStartLearning(concept: string) {
     <nav class="sticky top-0 z-20 bg-bg/95 backdrop-blur-lg border-b border-border shadow-sm">
       <!-- 一级：章节导航 — 四按钮均分铺满 -->
       <div class="flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2.5">
-        <button @click="emit('back-home')" class="btn-ghost text-xs py-1.5 px-2.5 shrink-0">← 首页</button>
+        <button v-if="!inline" @click="emit('back-home')" class="btn-ghost text-xs py-1.5 px-2.5 shrink-0">← 首页</button>
         <div class="flex-1 grid grid-cols-4 gap-2">
           <button v-for="ch in chapters" :key="ch.id" @click="scrollToChapter(ch.id)"
             :class="[ 'text-xs sm:text-[13px] whitespace-nowrap px-2 py-1.5 rounded-lg transition-all duration-300 font-medium text-center',

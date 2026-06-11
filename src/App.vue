@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { useAuthStore } from './stores/authStore'
-import UserMenu from './components/UserMenu.vue'
-import ToastContainer from './components/ToastContainer.vue'
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+import { useAuthStore } from "./stores/authStore"
+import UserMenu from "./components/UserMenu.vue"
+import ThemeToggle from "./components/ThemeToggle.vue"
+import ToastContainer from "./components/ToastContainer.vue"
 
 const route = useRoute()
 const auth = useAuthStore()
 
 const showAppShell = computed(() => {
-  return auth.isLoggedIn && !['login', 'register', 'auth-callback'].includes(route.name as string)
+  return !["login", "register", "auth-callback"].includes(route.name as string)
 })
 </script>
 
@@ -31,7 +32,11 @@ const showAppShell = computed(() => {
       </div>
 
       <div class="flex items-center gap-2">
-        <UserMenu />
+        <ThemeToggle />
+        <UserMenu v-if="auth.isLoggedIn" />
+        <template v-else>
+          <router-link to="/login" class="text-xs text-fg-muted hover:text-primary transition-colors px-2">登录</router-link>
+        </template>
       </div>
     </header>
 
